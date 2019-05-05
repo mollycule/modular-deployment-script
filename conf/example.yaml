@@ -1,0 +1,33 @@
+# Example Deployment Specification
+
+# ----- General Stuff -----
+
+# Extra rsync arguments
+nocvs: "--exclude=CVS"
+del: "--delete"
+
+# Example Server list
+servers: hostname[1..4]
+
+# -------------------------
+
+targets:
+    # ----- Calculate -----
+    example-target:
+        # ----- Example of Rsync Action Type -----
+        - do: "rsync"
+          src_path: "/example/full/source/path/"
+          dst_path: "/example/full/destination/path/"
+          dst_srv: "{servers}"
+          extra_args: "{nocvs} {del}"
+        # ----- Example of Command Action Type -----
+        - do: "cmd"
+        # Arbitrary command
+        # Eg "cp foo bar"
+          cmd: "foobar"
+        # ----- Example of Flyway Action Type -----
+        - do: "flyway"
+          src_path: "/example/full/source/path/"
+          dst_db: "ExampleDatabase"
+          dst_srv: "example-server"
+          flyway_args: "-outOfOrder=true"
